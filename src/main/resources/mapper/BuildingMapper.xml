@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.workspace.mapper.BuildingMapper">
+
+   <resultMap id="BuildingResultMap" type="com.workspace.dto.BuildingDTO">
+   
+		     <id property = "id" 
+		          column = "id" />
+   
+	         <result property="buildingName"
+	                column="building_name"/>
+	
+	        <result property="siteId"
+	                column="site_id"/>
+	                
+            <result property="siteName"
+		            column="site_name"/>
+		
+		    <result property="locationId"
+		            column="location_id"/>
+		
+		    <result property="locationName"
+		            column="location_name"/>
+   
+   </resultMap>
+
+    <select id="getAllBuildings"
+            resultMap="BuildingResultMap">
+        
+        SELECT
+		    b.id,
+		    b.building_name,
+		    b.site_id,
+		    s.site_name,
+		    s.location_id,
+		    l.location_name
+		FROM building b
+		JOIN site s
+		    ON b.site_id = s.id
+		JOIN location l
+		    ON s.location_id = l.id
+		   
+		    <where>
+		
+		        <if test="search != null and search != ''">
+		            b.building_name LIKE CONCAT('%', #{search}, '%')
+		        </if>
+		
+ 		        <if test="siteId != null">
+		            AND b.site_id = #{siteId}
+		        </if>
+		
+		        <if test="locationId != null">
+		            AND s.location_id = #{locationId}
+		        </if> 
+		
+		    </where>
+    
+		    <choose>
+
+			    <when test="sort == 'buildingName'">
+			        ORDER BY b.building_name
+			    </when>
+			
+			    <when test="sort == 'siteName'">
+			        ORDER BY s.site_name
+			    </when>
+			
+			    <when test="sort == 'locationName'">
+			        ORDER BY l.location_name
+			    </when>
+			
+			    <otherwise>
+			        ORDER BY b.id
+			    </otherwise>
+			
+			</choose>
+			
+		    LIMIT #{size}
+		    OFFSET #{offset};
+
+    </select>
+    
+   <select id="getBuildingById"
+            resultMap="BuildingResultMap">
+
+        SELECT
+            b.id,
+            b.building_name,
+            b.site_id ,
+            s.site_name,
+		    s.location_id,
+		    l.location_name
+        FROM building b
+        	JOIN site s
+		    ON b.site_id = s.id
+		JOIN location l
+		    ON s.location_id = l.id
+        WHERE b.id = #{id};
+        
+     </select>
+     
+     <insert id="addBuilding" useGeneratedKeys="true" keyProperty="id"> 
+             
+             INSERT INTO building
+             (
+				building_name,site_id 
+			 )
+			 VALUES 
+			 (
+				#{buildingName},#{siteId}
+             )
+     </insert>
+     
+     <update id="updateBuilding">
+     
+	     UPDATE building b
+	     SET 
+	     building_name = #{buildingName},
+	     site_id = #{siteId}
+	     WHERE b.id = #{id} 
+	     
+     </update>
+     
+    <delete id="deleteBuilding">
+     
+             DELETE FROM building
+             WHERE id = #{id}
+     </delete>
+     
+</mapper>
