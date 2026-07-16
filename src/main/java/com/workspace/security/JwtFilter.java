@@ -60,9 +60,11 @@ public class JwtFilter extends OncePerRequestFilter
     		logger.info("JWT is VALID");
     	    String username =
     	            jwtUtil.extractUsername(token);
+		    String role = jwtUtil.extractRole(token);
 
     	    logger.info(token);
     	    logger.info("username:{}",username);
+			logger.info("role:{}",role);
     	    
     	    GrantedAuthority authority =
     	            new SimpleGrantedAuthority(     //GrantedAuthority this is an interface so directly can be created object so spring SimpleGrantedAuthority

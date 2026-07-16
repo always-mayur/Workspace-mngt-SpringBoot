@@ -38,4 +38,11 @@ public class GlobalExceptionHandler
 		
 		return response;
 	}
+	
+	@ExceptionHandler(Exception.class)
+	public CommonResponse handleException(Exception exception)
+	{
+	    return CommonResponse.failure(
+	            exception.getMessage());
+	}
 }

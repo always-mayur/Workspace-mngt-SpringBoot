@@ -2,6 +2,7 @@ package com.workspace.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -10,6 +11,7 @@ import com.workspace.constants.URIConstants;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration // same as other annotations but contains configurations (like bean only )
+@EnableMethodSecurity //Spring, start checking security annotations placed on methods.
 @EnableWebSecurity
 public class SecurityConfig 
 {
