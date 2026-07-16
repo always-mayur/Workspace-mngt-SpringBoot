@@ -13,3 +13,12 @@ public class WorkspaceMngtApplication {
 	}
 
 }
+
+/*
+
+./mvnw clean
+
+./mvnw clean install
+./mvnw spring-boot:run
+
+*/
