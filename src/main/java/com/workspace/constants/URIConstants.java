@@ -13,4 +13,6 @@ public interface URIConstants
 	String BUILDING_BY_ID = "/api/v1/buildings/{id}";
 	
 	String LOGIN = "/api/v1/login";
+	
+	String FILE_UPLOAD = "/api/v1/files";
 }
